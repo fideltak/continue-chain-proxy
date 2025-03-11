@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: continue-chain-proxy
+spec:
+  gateways:
+  - istio-system/my-gateway
+  hosts:
+  - continue-chain-proxy.ezua.fumi.jp
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: myproxy-continue-chain-proxy 
+        port:
+          number: 8000
