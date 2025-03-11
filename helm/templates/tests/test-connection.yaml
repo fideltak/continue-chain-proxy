@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "continue-chain-proxy.fullname" . }}-test-connection"
+  labels:
+    {{- include "continue-chain-proxy.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "continue-chain-proxy.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
